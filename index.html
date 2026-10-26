@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nuvio Backup & Transfer</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main>
+  <h1>Nuvio Backup & Transfer</h1>
+  <p class="muted">Back up a Nuvio account to a file, or move addons, watch progress, library and more into another Nuvio account.
+    Everything runs in your browser; your password is only sent to the Nuvio server.</p>
+
+  <section id="source">
+    <h2>1. Source</h2>
+    <div class="tabs" role="group" aria-label="Source type">
+      <button type="button" data-tab="login" aria-pressed="true">Log in</button>
+      <button type="button" data-tab="file" aria-pressed="false">Open backup file</button>
+    </div>
+    <form id="srcLogin" data-pane="login">
+      <div class="row">
+        <label>Email <input type="email" name="email" required autocomplete="username"></label>
+        <label>Password <input type="password" name="password" required autocomplete="current-password"></label>
+      </div>
+      <details><summary class="muted">Server</summary><label>Nuvio server <input type="text" name="server"></label></details>
+      <button>Log in</button>
+    </form>
+    <div data-pane="file" hidden>
+      <label>Backup file <input type="file" id="srcFile" accept=".json,application/json"></label>
+    </div>
+    <p class="err" id="srcErr" role="alert"></p>
+
+    <div id="pick" hidden>
+      <p id="srcWho" class="muted"></p>
+      <fieldset><legend>Profiles</legend><div id="profiles"></div></fieldset>
+      <fieldset><legend>What to include</legend><div id="cats"></div></fieldset>
+      <button type="button" id="backupBtn">Download backup file</button>
+      <button type="button" id="toTargetBtn" class="secondary">Transfer to another account →</button>
+    </div>
+  </section>
+
+  <section id="target" hidden>
+    <h2>2. Destination account</h2>
+    <form id="tgtLogin">
+      <div class="row">
+        <label>Email <input type="email" name="email" required autocomplete="off"></label>
+        <label>Password <input type="password" name="password" required autocomplete="new-password"></label>
+      </div>
+      <details><summary class="muted">Server</summary><label>Nuvio server <input type="text" name="server"></label></details>
+      <button>Log in</button>
+    </form>
+    <p class="err" id="tgtErr" role="alert"></p>
+    <div id="mapping" hidden>
+      <p id="tgtWho" class="muted"></p>
+      <p class="muted">Choose where each profile goes. Merging keeps everything already in the destination and only adds what is missing
+        (progress is updated when the source is newer).</p>
+      <div id="maps"></div>
+      <button type="button" id="runBtn">Start transfer</button>
+    </div>
+  </section>
+
+  <section id="progress" hidden>
+    <h2>Progress</h2>
+    <pre id="log" aria-live="polite"></pre>
+  </section>
+</main>
+<script type="module" src="app.js"></script>
+</body>
+</html>
